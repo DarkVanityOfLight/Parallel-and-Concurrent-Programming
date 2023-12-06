@@ -1,9 +1,15 @@
 import GraphUtil.Graph;
 import simulator.Event;
 import simulator.Simulation;
+import GraphUtil.Graph;
 
-import java.util.*;
 
+import GraphUtil.Edge;
+
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Stack;
+import java.util.UUID;
 
 public class RandomWalkSimulation extends Simulation {
     public static final int processingTime = 5;
@@ -13,7 +19,7 @@ public class RandomWalkSimulation extends Simulation {
 
     @Override
     public void handleEvent(Event e) throws IllegalArgumentException {
-        if (e instanceof RandomWalk){
+        if (e instanceof RandomWalk) {
             handleRandomWalkMessage((RandomWalk) e);
         } else if (e instanceof RandomWalkResponseMessage) {
             try {
@@ -51,5 +57,29 @@ public class RandomWalkSimulation extends Simulation {
     }
 
     private void handleRandomWalkMessage(RandomWalk e) {
+        if (e.isSend()) {
+            int transmissionTime = graph.getWeight(e.getSender(), e.getReceiver());
+
+            RandomWalk sendMessage = new RandomWalk(e.getTime() + transmissionTime, e.getReceiver(), e.getSender(),
+                    false, e.getMessageId(), e.getTTL());
+            this.eventQueue.add(sendMessage);
+        } else {
+            if (e.getTTL() != 0) {
+                RandomWalk newMessage = new RandomWalk(e.getTime() + processingTime,
+                        getRandomNeighbor(e.getReceiver()), e.getReceiver(),
+                        true, e.getMessageId(), e.getTTL());
+                this.eventQueue.add(newMessage);
+            } else {
+
+            }
+        }
+    }
+
+    private int getRandomNeighbor(int currentNode) {
+        Edge[] neighbors = graph.getNeighbors(currentNode);
+
+        int randomNeighbor = new Random().nextInt(neighbors.length);
+        return neighbors[randomNeighbor].getNeighbor();
+
     }
 }
