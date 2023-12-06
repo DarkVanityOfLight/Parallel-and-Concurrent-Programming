@@ -18,12 +18,13 @@ public abstract class Simulation {
     /**
      * The priority queue to store and manage events in chronological order.
      */
-    private PriorityQueue<Event> eventQueue;
+    protected PriorityQueue<Event> eventQueue;
 
     /**
      * Default constructor for the simulation.
      */
-    public Simulation() {}
+    public Simulation() {
+    }
 
     /**
      * Initiates the simulation by initializing the event queue.
@@ -46,7 +47,8 @@ public abstract class Simulation {
     public void run() {
         this.currentTime = 0;
         while (!this.eventQueue.isEmpty()) {
-            // Get the next event, since it's a priority queue, it will be the next earliest one
+            // Get the next event, since it's a priority queue, it will be the next earliest
+            // one
             Event e = this.eventQueue.poll();
             // Set the current time to the time of the next earliest event
             this.currentTime = e.getTime();
@@ -55,7 +57,8 @@ public abstract class Simulation {
     }
 
     /**
-     * Abstract method that must be implemented by subclasses to handle specific event logic.
+     * Abstract method that must be implemented by subclasses to handle specific
+     * event logic.
      *
      * @param e The event to be handled.
      */
