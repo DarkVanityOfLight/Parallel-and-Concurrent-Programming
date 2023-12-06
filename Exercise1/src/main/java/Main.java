@@ -1,9 +1,11 @@
 import GraphUtil.Graph;
 import GraphUtil.Edge;
+import simulator.Simulation;
+
 public class Main {
     public static void main(String[] args) {
 
-        Graph g = new Graph("src/main/resources/test-graph.txt");
-        System.out.println("Hello world!");
+        Simulation s = new RandomWalkSimulation();
+        s.simulate();
     }
 }

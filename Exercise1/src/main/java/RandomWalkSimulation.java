@@ -18,6 +18,24 @@ public class RandomWalkSimulation extends Simulation {
     private Graph graph;
 
     @Override
+    public void initialize(){
+        super.initialize();
+
+        this.graph = new Graph("src/main/resources/test-graph.txt");
+        Random rng = new Random();
+        for(int node = 0; node < this.graph.getNumberNodes() - 1; node++){
+            UUID id = UUID.randomUUID();
+            Stack<Integer> s = new Stack<>();
+            this.messagePaths.put(id, s);
+            s.push(node);
+            int startTime = rng.nextInt(5000);
+            RandomWalk message = new RandomWalk(startTime, this.getRandomNeighbor(node), node, true, id, 5);
+            this.eventQueue.add(message);
+        }
+
+    }
+
+    @Override
     public void handleEvent(Event e) throws IllegalArgumentException {
         if (e instanceof RandomWalk) {
             handleRandomWalkMessage((RandomWalk) e);
@@ -73,7 +91,7 @@ public class RandomWalkSimulation extends Simulation {
 
                 RandomWalk newMessage = new RandomWalk(e.getTime() + processingTime,
                         getRandomNeighbor(e.getReceiver()), e.getReceiver(),
-                        true, e.getMessageId(), e.getTTL());
+                        true, e.getMessageId(), e.getTTL() - 1);
                 this.eventQueue.add(newMessage);
             } else {
                 int thisNode = e.getReceiver();
