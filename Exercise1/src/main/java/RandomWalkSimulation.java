@@ -70,7 +70,14 @@ public class RandomWalkSimulation extends Simulation {
                         true, e.getMessageId(), e.getTTL());
                 this.eventQueue.add(newMessage);
             } else {
+                int thisNode = e.getReceiver();
+                UUID id = e.getMessageId();
+                Stack<Integer> thisMessagePath = this.messagePaths.get(id);
+                int next = thisMessagePath.pop();
 
+                RandomWalkResponseMessage sendM = new RandomWalkResponseMessage(e.getTime() + processingTime, next,
+                        thisNode, true, e.getMessageId(), thisNode);
+                this.eventQueue.add(sendM);
             }
         }
     }
