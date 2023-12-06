@@ -64,7 +64,13 @@ public class RandomWalkSimulation extends Simulation {
                     false, e.getMessageId(), e.getTTL());
             this.eventQueue.add(sendMessage);
         } else {
+            // Handle receiving a message
             if (e.getTTL() != 0) {
+                int thisNode = e.getReceiver();
+                Stack<Integer> messagePath = this.messagePaths.get(e.getMessageId());
+
+                messagePath.push(thisNode);
+
                 RandomWalk newMessage = new RandomWalk(e.getTime() + processingTime,
                         getRandomNeighbor(e.getReceiver()), e.getReceiver(),
                         true, e.getMessageId(), e.getTTL());
