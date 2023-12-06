@@ -1,4 +1,3 @@
-import simulator.Message;
 import simulator.UUIDMessage;
 
 import java.util.UUID;
