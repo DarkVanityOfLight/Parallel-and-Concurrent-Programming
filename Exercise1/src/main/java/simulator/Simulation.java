@@ -54,6 +54,10 @@ public abstract class Simulation {
         }
     }
 
+    public int getCurrentTime() {
+        return currentTime;
+    }
+
     /**
      * Abstract method that must be implemented by subclasses to handle specific event logic.
      *

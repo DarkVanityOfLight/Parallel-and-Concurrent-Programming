@@ -45,7 +45,7 @@ public class RandomWalkSimulation extends Simulation {
             UUID id = e.getMessageId();
             Stack<Integer> thisMessagePath = this.messagePaths.get(id);
             if (thisMessagePath.isEmpty()){
-                // TODO we are done what do
+                System.out.printf("Random walk from %d to %d is completed at %d\n", thisNode, e.getEndpoint(), this.getCurrentTime());
             }else{
                 int next = thisMessagePath.pop();
                 RandomWalkResponseMessage sendM = new RandomWalkResponseMessage(e.getTime() + processingTime, next,
