@@ -5,6 +5,7 @@ import GraphUtil.Graph;
 
 
 import GraphUtil.Edge;
+import simulator.UUIDMessage;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -31,34 +32,40 @@ public class RandomWalkSimulation extends Simulation {
             int startTime = rng.nextInt(5000);
             RandomWalk message = new RandomWalk(startTime, this.getRandomNeighbor(node), node, true, id, 5);
             this.eventQueue.add(message);
+            Main.logger.info("Starting Random walk {} at {}.", id, startTime);
         }
 
     }
 
     @Override
     public void handleEvent(Event e) throws IllegalArgumentException {
+        Main.logger.debug("Current time is {}", this.getCurrentTime());
+        Main.logger.debug("Handling Event {} at {}.", ((UUIDMessage) e).getMessageId(), this.getCurrentTime());
         if (e instanceof RandomWalk) {
             handleRandomWalkMessage((RandomWalk) e);
         } else if (e instanceof RandomWalkResponseMessage) {
-            try {
-                handleRandomWalkResponseMessage((RandomWalkResponseMessage) e);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
+            handleRandomWalkResponseMessage((RandomWalkResponseMessage) e);
         }else{
             throw new IllegalArgumentException();
         }
     }
 
-    private void handleRandomWalkResponseMessage(RandomWalkResponseMessage e) throws Exception {
+    private void handleRandomWalkResponseMessage(RandomWalkResponseMessage e) {
         if (e.isSend()){
+            Main.logger.info("Handling RandomWalkResponse send Event {} from {} to {} at {}",
+                    e.getMessageId(), e.getSender(), e.getReceiver(), e.getTime());
+
             int transmissionTime = graph.getWeight(e.getSender(), e.getReceiver());
             // Create a recv event after send event + transmission time
             RandomWalkResponseMessage recvM = new RandomWalkResponseMessage(e.getTime() + transmissionTime,
                     e.getReceiver(), e.getSender(), false, e.getMessageId(), e.getEndpoint());
+
             this.eventQueue.add(recvM);
 
         }else{
+            Main.logger.info("Handling RandomWalkResponse receive Event {} from {} to {} at {}",
+                    e.getMessageId(), e.getSender(), e.getReceiver(), e.getTime());
+
             int thisNode = e.getReceiver();
             UUID id = e.getMessageId();
             Stack<Integer> thisMessagePath = this.messagePaths.get(id);
@@ -76,12 +83,17 @@ public class RandomWalkSimulation extends Simulation {
 
     private void handleRandomWalkMessage(RandomWalk e) {
         if (e.isSend()) {
+            Main.logger.info("Handling RandomWalk send Event {} from {} to {} at {}",
+                    e.getMessageId(), e.getSender(), e.getReceiver(), e.getTime());
             int transmissionTime = graph.getWeight(e.getSender(), e.getReceiver());
 
             RandomWalk sendMessage = new RandomWalk(e.getTime() + transmissionTime, e.getReceiver(), e.getSender(),
                     false, e.getMessageId(), e.getTTL());
             this.eventQueue.add(sendMessage);
         } else {
+            Main.logger.info("Handling RandomWalk receive Event {} from {} to {} at {}",
+                    e.getMessageId(), e.getSender(), e.getReceiver(), e.getTime());
+
             // Handle receiving a message
             if (e.getTTL() != 0) {
                 int thisNode = e.getReceiver();
