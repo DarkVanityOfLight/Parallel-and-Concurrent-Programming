@@ -21,11 +21,11 @@ public class RandomWalkMessage extends UUIDMessage {
      * @param sender   the unique identifier of the sender or receiver.
      * @param isSend   a flag indicating whether the message is a send event (true)
      *                 or receive event (false).
-     * @param m        a count how many nodes should be visited
+     * @param ttl        a count how many nodes should be visited
      */
-    public RandomWalkMessage(int time, int receiver, int sender, boolean isSend, UUID messageId, int m) {
+    public RandomWalkMessage(int time, int receiver, int sender, boolean isSend, UUID messageId, int ttl) {
         super(time, receiver, sender, isSend, messageId);
-        this.ttl = m;
+        this.ttl = ttl;
     }
 
     /**

@@ -2,6 +2,10 @@ import simulator.UUIDMessage;
 
 import java.util.UUID;
 
+/**
+ * Represents a response message to a random walk
+ * contains the endpoint of the random walk
+ */
 public class RandomWalkResponseMessage extends UUIDMessage {
     private int endpoint;
 
