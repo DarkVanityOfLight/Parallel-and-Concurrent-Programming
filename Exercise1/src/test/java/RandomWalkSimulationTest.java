@@ -8,8 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 // WARNING:
 // Don't bother checking this mess,
 // this is only to output a single walk starting from 0
@@ -34,7 +32,7 @@ class RandomWalkSimulationTest {
 
         UUID id = UUID.randomUUID();
 
-        RandomWalk r = new RandomWalk(0, (Integer) grn.invoke(s, 0), 0, true, id, 5);
+        RandomWalkMessage r = new RandomWalkMessage(0, (Integer) grn.invoke(s, 0), 0, true, id, 5);
 
         HashMap<UUID, Stack<Integer>> messagePathsValue = (HashMap<UUID, Stack<Integer>>) mp.get(s);
         messagePathsValue.put(id, new Stack<>());

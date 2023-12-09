@@ -36,7 +36,7 @@ public class RandomWalkResponseMessage extends UUIDMessage {
 
 
     /**
-     * Get the endpoint of the original RandomWalk address
+     * Get the endpoint of the original RandomWalkMessage address
      * @return the endpoint
      */
     public int getEndpoint() {

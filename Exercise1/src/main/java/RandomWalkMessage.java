@@ -5,7 +5,7 @@ import simulator.UUIDMessage;
 /**
  * Gives a `UUIDMessage` a time-to-live(TTL)
  */
-public class RandomWalk extends UUIDMessage {
+public class RandomWalkMessage extends UUIDMessage {
 
     /**
      * The current time-to-live(TTL)
@@ -23,7 +23,7 @@ public class RandomWalk extends UUIDMessage {
      *                 or receive event (false).
      * @param m        a count how many nodes should be visited
      */
-    public RandomWalk(int time, int receiver, int sender, boolean isSend, UUID messageId, int m) {
+    public RandomWalkMessage(int time, int receiver, int sender, boolean isSend, UUID messageId, int m) {
         super(time, receiver, sender, isSend, messageId);
         this.ttl = m;
     }
