@@ -18,7 +18,7 @@ public abstract class Simulation {
     /**
      * The priority queue to store and manage events in chronological order.
      */
-    private PriorityQueue<Event> eventQueue;
+    protected PriorityQueue<Event> eventQueue;
 
     /**
      * Default constructor for the simulation.
@@ -52,6 +52,10 @@ public abstract class Simulation {
             this.currentTime = e.getTime();
             this.handleEvent(e);
         }
+    }
+
+    public int getCurrentTime() {
+        return currentTime;
     }
 
     /**
