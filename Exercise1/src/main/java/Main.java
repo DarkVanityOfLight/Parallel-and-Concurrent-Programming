@@ -6,7 +6,8 @@ public class Main {
     public static final Logger logger = LogManager.getLogger("Hi");
     public static void main(String[] args) {
 
-        Simulation s = new RandomWalkSimulation();
+        // Provide the wanted Time to Live m as a parameter
+        Simulation s = new RandomWalkSimulation(5);
         s.simulate();
     }
 }

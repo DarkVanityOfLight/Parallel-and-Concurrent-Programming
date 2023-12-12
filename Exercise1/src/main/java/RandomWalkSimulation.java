@@ -14,8 +14,13 @@ import java.util.UUID;
 public class RandomWalkSimulation extends Simulation {
     public static final int processingTime = 5;
 
-    private HashMap<UUID, Stack<Integer>> messagePaths = new HashMap<>();
+    private final HashMap<UUID, Stack<Integer>> messagePaths = new HashMap<>();
     private Graph graph;
+    private int ttl;
+
+    public RandomWalkSimulation(int timeToLive){
+        this.ttl = timeToLive;
+    }
 
     @Override
     public void initialize(){
@@ -26,20 +31,35 @@ public class RandomWalkSimulation extends Simulation {
 
         // Start a random walk from every node
         for(int node = 0; node < this.graph.getNumberNodes() - 1; node++){
-            // Generate a message id
-            UUID id = UUID.randomUUID();
-
-            // Create a new path stack for our message
-            Stack<Integer> s = new Stack<>();
-            this.messagePaths.put(id, s);
-            s.push(node);
 
             int startTime = rng.nextInt(5000);
-            RandomWalkMessage message = new RandomWalkMessage(startTime, this.getRandomNeighbor(node), node, true, id, 5);
-            this.eventQueue.add(message);
-            Main.logger.info("Starting Random walk {} at {}.", id, startTime);
+
+            startWalk(node, this.getTTL(), startTime);
         }
 
+    }
+
+    /**
+     * Start a random walk from start walk, with a ttl at point in time
+     * @param startNode the node to start from
+     * @param ttl the time to live m
+     * @param startTime the start time
+     * @return
+     */
+    public UUID startWalk(int startNode, int ttl, int startTime){
+
+        UUID id = UUID.randomUUID();
+        Stack<Integer> s = new Stack<>();
+        s.push(startNode);
+
+        this.messagePaths.put(id, s);
+
+        RandomWalkMessage message = new RandomWalkMessage(startTime, this.getRandomNeighbor(startNode), startNode, true, id, ttl);
+        this.eventQueue.add(message);
+
+        Main.logger.info("Starting Random walk {} at {}.", id, startTime);
+
+        return id;
     }
 
     @Override
@@ -118,7 +138,7 @@ public class RandomWalkSimulation extends Simulation {
                 // TTL is not yet zero get a new neighbor and the walk to him
                 int thisNode = e.getReceiver();
 
-                // Add this node to the path so we know where to walk on our way back
+                // Add this node to the path, so we know where to walk on our way back
                 Stack<Integer> messagePath = this.messagePaths.get(e.getMessageId());
                 messagePath.push(thisNode);
 
@@ -149,5 +169,13 @@ public class RandomWalkSimulation extends Simulation {
         int randomNeighbor = new Random().nextInt(neighbors.length);
         return neighbors[randomNeighbor].getNeighbor();
 
+    }
+
+    public int getTTL() {
+        return ttl;
+    }
+
+    public void setTTL(int ttl) {
+        this.ttl = ttl;
     }
 }
