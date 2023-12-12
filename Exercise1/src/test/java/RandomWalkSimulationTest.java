@@ -12,12 +12,14 @@ import java.util.*;
 // Don't bother checking this mess,
 // this is only to output a single walk starting from 0
 // at time 0
+// UPDATE: This now got easier using the startWalk method but we are to lazy
+// to change
 class RandomWalkSimulationTest {
 
     @Test
     void testSingleWalk() throws NoSuchFieldException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
-        RandomWalkSimulation s = new RandomWalkSimulation();
+        RandomWalkSimulation s = new RandomWalkSimulation(5);
 
         Field g = RandomWalkSimulation.class.getDeclaredField("graph");
         g.setAccessible(true);
