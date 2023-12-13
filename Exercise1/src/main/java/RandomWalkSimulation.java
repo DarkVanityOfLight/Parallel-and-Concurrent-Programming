@@ -30,7 +30,7 @@ public class RandomWalkSimulation extends Simulation {
         Random rng = new Random();
 
         // Start a random walk from every node
-        for(int node = 0; node < this.graph.getNumberNodes() - 1; node++){
+        for(int node = 0; node <= this.graph.getNumberNodes() - 1; node++){
 
             int startTime = rng.nextInt(5000);
 
