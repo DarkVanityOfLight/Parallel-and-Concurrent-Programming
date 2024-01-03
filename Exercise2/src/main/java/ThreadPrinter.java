@@ -1,4 +1,4 @@
-public class ThreadPrinter extends Thread{
+public class ThreadPrinter extends Thread implements Sleeps {
     private ProcessInput input;
     private int sleeptime = 500;
 
@@ -11,10 +11,20 @@ public class ThreadPrinter extends Thread{
         while (input.isRunning()){
             System.out.println(input.getStatus());
             try {
-                Thread.sleep(200);
+                Thread.sleep(sleeptime);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+               break;
             }
         }
+    }
+
+    @Override
+    public void setSleeptime(int sleeptime) {
+        this.sleeptime = sleeptime;
+    }
+
+    @Override
+    public int getSleeptime() {
+        return sleeptime;
     }
 }

@@ -4,6 +4,8 @@ public class ProcessInput {
     private int status;
     private boolean isRunning;
 
+    private Sleeps printer;
+
     public ProcessInput(){
         status = 0;
     }
@@ -16,6 +18,14 @@ public class ProcessInput {
                isRunning = false;
            }else if (Character.isDigit(input)){
                status = Character.getNumericValue(input);
+
+               if(printer.getSleeptime() <= 1300){
+                   printer.setSleeptime(printer.getSleeptime() + 200);
+               }else {
+                   ((Thread) printer).interrupt();
+                   break;
+               }
+
            }else {
                continue;
            }
@@ -28,5 +38,9 @@ public class ProcessInput {
 
     public int getStatus() {
         return status;
+    }
+
+    public void setPrinter(Sleeps printer) {
+        this.printer = printer;
     }
 }
