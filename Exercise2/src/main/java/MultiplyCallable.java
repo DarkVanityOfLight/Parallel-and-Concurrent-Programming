@@ -1,12 +1,16 @@
 import java.util.concurrent.Callable;
 
-/*
-TODO: NOT YET IMPLEMENTED
- */
 public class MultiplyCallable implements Callable<Integer> {
+    private int n;
+    private int m;
+
+    public MultiplyCallable(int n, int m) {
+        this.n = n;
+        this.m = m;
+    }
 
     @Override
-    public Integer call() throws Exception {
-        return null;
+    public Integer call() {
+        return n * m;
     }
 }
