@@ -12,6 +12,7 @@ public class ThreadPrinter extends Thread implements ThreadedSleeps {
         while (input.isRunning()){
             System.out.println(input.getStatus());
             try {
+                //noinspection BusyWait
                 Thread.sleep(sleeptime);
             } catch (InterruptedException e) {
                 break;
