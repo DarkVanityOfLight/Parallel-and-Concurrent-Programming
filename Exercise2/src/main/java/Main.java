@@ -61,7 +61,7 @@ public class Main {
             List<Future<Integer>> futures = executor.invokeAll(addCallableList);
             for (int i = 0; i < futures.size(); i++) {
                 int value = futures.get(i).get();
-                System.out.println("Ergebnis für Wert " + (i + 1) + ": " + value);
+                System.out.println("Result for value " + (i + 1) + ": " + value);
             }
         }
 
