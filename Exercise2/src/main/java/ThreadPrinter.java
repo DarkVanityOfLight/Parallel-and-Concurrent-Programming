@@ -14,7 +14,7 @@ public class ThreadPrinter extends Thread implements ThreadedSleeps {
             try {
                 Thread.sleep(sleeptime);
             } catch (InterruptedException e) {
-               break;
+                break;
             }
         }
     }
