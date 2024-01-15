@@ -14,14 +14,14 @@ public class Main {
 
         // Uncomment to use the Runnable
         /*
-        RunnablePrinter rp = new RunnablePrinter(p);
+        RunnablePrinter rp = new RunnablePrinter(p, 500);
         Thread pr = new Thread(rp);
         p.setPrinter(rp);
          */
 
         // Printer using thread
         // Comment when using Runnable
-        ThreadPrinter pr = new ThreadPrinter(p);
+        ThreadPrinter pr = new ThreadPrinter(p, 500);
         p.setPrinter(pr);
 
         pr.start();

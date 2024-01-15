@@ -1,9 +1,10 @@
 public class RunnablePrinter implements Runnable, ThreadedSleeps {
     private final ProcessInput input;
-    private int sleeptime = 500;
+    private int sleeptime;
 
-    public RunnablePrinter(ProcessInput input){
+    public RunnablePrinter(ProcessInput input, int sleeptime){
         this.input = input;
+        this.sleeptime = sleeptime;
     }
 
     @Override

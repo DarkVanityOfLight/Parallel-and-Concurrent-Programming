@@ -1,9 +1,10 @@
 public class ThreadPrinter extends Thread implements ThreadedSleeps {
     private final ProcessInput input;
-    private int sleeptime = 500;
+    private int sleeptime;
 
-    public ThreadPrinter(ProcessInput input){
+    public ThreadPrinter(ProcessInput input, int sleeptime){
         this.input = input;
+        this.sleeptime = sleeptime;
     }
 
     @Override
