@@ -1,8 +1,8 @@
 import java.util.concurrent.Callable;
 
 public class MultiplyCallable implements Callable<Integer> {
-    private int n;
-    private int m;
+    private final int n;
+    private final int m;
 
     public MultiplyCallable(int n, int m) {
         this.n = n;

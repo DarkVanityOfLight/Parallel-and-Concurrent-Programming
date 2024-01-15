@@ -6,34 +6,36 @@ import java.util.concurrent.*;
 public class Main {
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
 
-        //===============
-        //||Exercise 1 ||
-        //===============
-
-        // IMPORTANT:
-        // THIS IS A MINIGAME, YOU NEED TO HIT YOU INPUT
-        // BEFORE System.out.println IS CALLED
-        // OR ELSE IT WILL INTERFERE WITH System.in.read
+        System.out.println("==========");
+        System.out.println("Exercise 1");
+        System.out.println("==========");
 
         ProcessInput p = new ProcessInput();
 
-        /* Uncomment to use the Runnable
+        // Uncomment to use the Runnable
+        /*
         RunnablePrinter rp = new RunnablePrinter(p);
         Thread pr = new Thread(rp);
-        */
+        p.setPrinter(rp);
+         */
 
         // Printer using thread
         // Comment when using Runnable
         ThreadPrinter pr = new ThreadPrinter(p);
-
         p.setPrinter(pr);
 
-        //pr.start();
-        //p.process();
+        pr.start();
+        p.process();
 
-        //===============
-        //||Exercise 2 ||
-        //===============
+        // Wait till everything is terminated
+        try{
+            pr.join();
+        } catch (InterruptedException ignored){}
+
+
+        System.out.println("==========");
+        System.out.println("Exercise 2");
+        System.out.println("==========");
 
         AddCallable addCallable = new AddCallable(1001);
         MultiplyCallable multiplyCallable = new MultiplyCallable(1001, 501);
@@ -72,7 +74,6 @@ public class Main {
             Integer result = executorService.invokeAny(addCallableList);
             System.out.println("First to return returned: " + result);
         }
-
 
     }
 }

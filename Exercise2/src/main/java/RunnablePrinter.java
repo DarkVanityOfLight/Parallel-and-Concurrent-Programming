@@ -1,4 +1,4 @@
-public class RunnablePrinter implements Runnable, Sleeps {
+public class RunnablePrinter implements Runnable, ThreadedSleeps {
     private final ProcessInput input;
     private int sleeptime = 500;
 
@@ -7,14 +7,13 @@ public class RunnablePrinter implements Runnable, Sleeps {
     }
 
     @Override
-    public void run() {
-        while(input.isRunning()){
+    public void run(){
+        while (input.isRunning()){
             System.out.println(input.getStatus());
-
             try {
                 Thread.sleep(sleeptime);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                break;
             }
         }
     }
@@ -27,5 +26,10 @@ public class RunnablePrinter implements Runnable, Sleeps {
     @Override
     public int getSleeptime() {
         return this.sleeptime;
+    }
+
+    @Override
+    public void interrupt() {
+        Thread.currentThread().interrupt();
     }
 }

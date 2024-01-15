@@ -4,7 +4,7 @@ public class ProcessInput {
     private int status;
     private boolean isRunning;
 
-    private Sleeps printer;
+    private ThreadedSleeps printer;
 
     public ProcessInput(){
         status = 0;
@@ -22,7 +22,8 @@ public class ProcessInput {
                if(printer.getSleeptime() <= 1300){
                    printer.setSleeptime(printer.getSleeptime() + 200);
                }else {
-                   ((Thread) printer).interrupt();
+                   printer.interrupt();
+                   this.isRunning = false;
                    break;
                }
 
@@ -40,7 +41,7 @@ public class ProcessInput {
         return status;
     }
 
-    public void setPrinter(Sleeps printer) {
+    public void setPrinter(ThreadedSleeps printer) {
         this.printer = printer;
     }
 }

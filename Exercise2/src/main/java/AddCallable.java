@@ -1,7 +1,7 @@
 import java.util.concurrent.Callable;
 
 public class AddCallable implements Callable<Integer> {
-    private int n;
+    private final int n;
 
     public AddCallable(int n){
         this.n = n;

@@ -1,5 +1,5 @@
-public class ThreadPrinter extends Thread implements Sleeps {
-    private ProcessInput input;
+public class ThreadPrinter extends Thread implements ThreadedSleeps {
+    private final ProcessInput input;
     private int sleeptime = 500;
 
     public ThreadPrinter(ProcessInput input){
