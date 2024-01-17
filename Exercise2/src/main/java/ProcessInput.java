@@ -19,7 +19,7 @@ public class ProcessInput {
            }else if (Character.isDigit(input)){
                status = Character.getNumericValue(input);
 
-               if(printer.getSleeptime() <= 1300){
+               if(printer.getSleeptime() < 1300){
                    printer.setSleeptime(printer.getSleeptime() + 200);
                }else {
                    printer.interrupt();

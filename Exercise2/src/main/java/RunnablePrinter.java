@@ -9,7 +9,7 @@ public class RunnablePrinter implements Runnable, ThreadedSleeps {
 
     @Override
     public void run(){
-        while (input.isRunning()){
+        while (input.isRunning() && !Thread.currentThread().isInterrupted()){
             System.out.println(input.getStatus());
             try {
                 //noinspection BusyWait

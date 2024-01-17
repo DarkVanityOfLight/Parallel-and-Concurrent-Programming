@@ -9,7 +9,7 @@ public class ThreadPrinter extends Thread implements ThreadedSleeps {
 
     @Override
     public void run(){
-        while (input.isRunning()){
+        while (input.isRunning() && !this.isInterrupted()){
             System.out.println(input.getStatus());
             try {
                 //noinspection BusyWait
